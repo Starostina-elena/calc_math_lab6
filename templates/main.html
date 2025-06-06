@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab6</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script>
+        function replaceCommaWithDot(event) {
+            const input = event.target;
+            input.value = input.value.replace(',', '.');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputs = document.querySelectorAll('input[type="text"]');
+            inputs.forEach(input => {
+                input.addEventListener('input', replaceCommaWithDot);
+            });
+        });
+    </script>
+</head>
+<body>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="form-block">{{ message }}</div>
+    <div class="form-block">
+        <label for="equation_choice">Выберите ОДУ:</label>
+        {{ form.equation_choice }}
+    </div>
+    <div class="form-block">
+        <label for="y0">Начальное значение Y0:</label>
+        {{ form.y0 }}
+    </div>
+    <div class="form-block">
+        <label for="x0">X от:</label>
+        {{ form.x0 }}
+    </div>
+    <div class="form-block">
+        <label for="xn">X до:</label>
+        {{ form.xn }}
+    </div>
+    <div class="form-block">
+        <label for="h">Шаг:</label>
+        {{ form.h }}
+    </div>
+    <div class="form-block">
+        {{ form.submit }}
+        <button type="button" onclick="window.location.href='/'" class="btn">Очистить</button>
+    </div>
+</form>
+</body>
+</html>

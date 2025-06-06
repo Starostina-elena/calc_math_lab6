@@ -1,4 +1,4 @@
-from runge_cutt import runge_cutt
+from .runge_cutt import runge_cutt
 
 def adams(f, y0, x0, xn, h):
     res = runge_cutt(f, y0, x0, x0 + 3 * h, h)

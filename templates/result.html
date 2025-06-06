@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab6</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<button class="btn" onclick="location.href='/'">Назад</button>
+<h3>Метод Эйлера</h3>
+<h4>Погрешность: {{ eiler_r }}</h4>
+<div class="my-div">
+    <table>
+        <thead>
+            <tr>
+                <th>X</th>
+                <th>Y</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for x, y in eiler_points %}
+                <tr>
+                    <td>{{ x | round(3) }}</td>
+                    <td>{{ y | round(3) }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<h3>Метод Рунге-Кутта 4-го порядка </h3>
+<h4>Погрешность: {{ runge_r }}</h4>
+<div class="my-div">
+    <table>
+        <thead>
+            <tr>
+                <th>X</th>
+                <th>Y</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for x, y in runge_points %}
+                <tr>
+                    <td>{{ x | round(3) }}</td>
+                    <td>{{ y | round(3) }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<h3>Метод Адамса</h3>
+<h4>Погрешность: {{ adam_r }}</h4>
+<div class="my-div">
+    <table>
+        <thead>
+            <tr>
+                <th>X</th>
+                <th>Y</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for x, y in adams_points %}
+                <tr>
+                    <td>{{ x | round(3) }}</td>
+                    <td>{{ y | round(3) }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div id="calculator-wrapper">
+    <div id="calculator" style="width: 800px; height: 800px;"></div>
+</div>
+<script src="https://www.desmos.com/api/v1.10/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+<script>
+    var elt = document.getElementById('calculator');
+    var calculator = Desmos.GraphingCalculator(elt);
+    calculator.updateSettings({
+        keypad: false,
+        expressions: true,
+        expressionsCollapsed: true
+    });
+    calculator.setExpression({
+        id: 'adams',
+        type: 'table',
+        columns: [
+            {latex: 'x', values: {{ adams_x|tojson }}},
+            {latex: 'y', values: {{ adams_y|tojson }}, lines: 1, points: 0}
+        ],
+    });
+    calculator.setExpression({
+        id: 'eiler',
+        type: 'table',
+        columns: [
+            {latex: 'x', values: {{ eiler_x|tojson }}},
+            {latex: 'y', values: {{ eiler_y|tojson }}, lines: 1, points: 0}
+        ],
+    });
+    calculator.setExpression({
+        id: 'runge',
+        type: 'table',
+        columns: [
+            {latex: 'x', values: {{ runge_x|tojson }}},
+            {latex: 'y', values: {{ runge_y|tojson }}, lines: 1, points: 0}
+        ],
+    });
+    calculator.setExpression({
+        id: 'exact',
+        latex: '{{ desmos_equation }}',
+        color: 'yellow'
+    });
+    calculator.setExpression({
+        id: 'slider_C',
+        latex: 'C={{ desmos_C }}',
+        sliderBounds: {min: {{ desmos_C_min }}, max: {{ desmos_C_max }}, step: 0.1}
+    });
+</script>
+</body>
+</html>
