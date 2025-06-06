@@ -14,6 +14,6 @@ class InputForm(FlaskForm):
     x0 = FloatField('X от', validators=[DataRequired()])
     xn = FloatField('X до', validators=[DataRequired()])
     h = FloatField('Шаг', validators=[DataRequired(), NumberRange(min=0.001, message='Шаг должен быть больше 0')])
-
+    eps = FloatField('Точность', default=0.01, validators=[DataRequired(), NumberRange(min=0.01, message='Точность должна быть больше 0')])
 
     submit = SubmitField('Вычислить', render_kw={'class': 'btn'})

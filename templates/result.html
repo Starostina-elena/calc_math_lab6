@@ -7,8 +7,15 @@
 </head>
 <body>
 <button class="btn" onclick="location.href='/'">Назад</button>
+<h1>
+    {% if equation == "eq1" %}y'=2xy/(x^2+1)
+    {% elif equation == "eq2" %}y'=y+(1+x)y^2
+    {% elif equation == "eq3" %}y'=x+y
+    {% endif %} (шаг {{ step }})
+</h1>
 <h3>Метод Эйлера</h3>
 <h4>Погрешность: {{ eiler_r }}</h4>
+<h4>Для достижения погрешности {{ eps }} достаточно шага {{ eiler_h }}</h4>
 <div class="my-div">
     <table>
         <thead>
@@ -29,6 +36,7 @@
 </div>
 <h3>Метод Рунге-Кутта 4-го порядка </h3>
 <h4>Погрешность: {{ runge_r }}</h4>
+<h4>Для достижения погрешности {{ eps }} достаточно шага {{ runge_h }}</h4>
 <div class="my-div">
     <table>
         <thead>
@@ -49,6 +57,9 @@
 </div>
 <h3>Метод Адамса</h3>
 <h4>Погрешность: {{ adam_r }}</h4>
+{% if adam_h_success == True %}
+<h4>Для достижения погрешности {{ eps }} достаточно шага {{ adam_h }}</h4>
+{% endif %}
 <div class="my-div">
     <table>
         <thead>

@@ -9,3 +9,14 @@ def eiler(f, y0, x0, xn, h):
         xi += h
 
     return res
+
+
+def eiler_find_h_for_eps(f, y0, x0, xn, h, eps):
+    res = eiler(f, y0, x0, xn, h)
+
+    while True:
+        new_res = eiler(f, y0, x0, xn, h / 2)
+        if abs(new_res[1][1] - res[1][1]) < eps:
+            return h
+        res = new_res
+        h /= 2

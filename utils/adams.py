@@ -19,3 +19,21 @@ def adams(f, y0, x0, xn, h):
         xi += h
 
     return res
+
+
+def adams_find_h_for_eps(f, y0, x0, xn, h, eps, math_answer):
+    res = adams(f, y0, x0, xn, h)
+    cnt = 0
+
+    adam_r = max(abs(math_answer(x, x0, x0) - y) for x, y in res)
+
+    while True:
+        if adam_r < eps:
+            return h
+        res = adams(f, y0, x0, xn, h / 2)
+        h /= 2
+        adam_r = max(abs(math_answer(x, x0, x0) - y) for x, y in res)
+
+        cnt += 1
+        if cnt > 10:
+            raise ValueError('Слишком большой интервал x')
